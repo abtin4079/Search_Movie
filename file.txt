@@ -1,6 +1,19 @@
 version: '3.7'
 
 services:
+  # api:
+  #   build: .
+  #   container_name: film_recommender
+  #   volumes:
+  #     - ./:/code
+  #   networks:
+  #     - dockernet
+  #   depends_on:
+  #     - redis
+  #   ports:
+  #     - "8000:8000"
+  #   entrypoint: "./main_entrypoint.sh"
+
   redis:
     image: redis:latest
     container_name: redis
@@ -47,24 +60,6 @@ services:
       - elasticsearch
     networks:
       - dockernet
-
-  film_recommender:
-    # New service for film recommender
-    image: film_recommender:latest # Path to the directory containing Dockerfile
-    container_name: film_recommender
-    environment:
-      - HOST=0.0.0.0
-    volumes:
-      - ./:/code # Adjust this volume mount as needed
-    networks:
-      - dockernet
-    depends_on:
-      - redis
-      - elasticsearch
-    expose:
-      - 8000
-    ports:
-      - "8000:8000"
 
 networks:
   dockernet:
